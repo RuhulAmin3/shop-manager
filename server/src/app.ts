@@ -21,9 +21,11 @@ const corsOptions = {
     ];
 
     const localhostSubdomainRegex = /^http:\/\/.*\.localhost:5173$/;
+
     if (
-      origin &&
-      (allowedOrigins.includes(origin) || localhostSubdomainRegex.test(origin))
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      localhostSubdomainRegex.test(origin)
     ) {
       callback(null, true);
     } else {
@@ -34,6 +36,7 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
+
 
 // Middleware setup
 app.use(cors(corsOptions));

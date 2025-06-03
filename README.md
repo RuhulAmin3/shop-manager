@@ -125,12 +125,18 @@ Logs out the currently authenticated user by invalidating their session or token
    npm install
    ```
 
-3. **Start development server**
+3. **Configure API endpoint**
+   Update the API base URL in `src/store/api/authApi.ts`:
+   ```typescript
+   const API_BASE_URL = 'http://localhost:3000/api/v1/auth'; // for local
+   ```
+
+4. **Start development server**
    ```bash
    npm run dev
    ```
 
-4. **Build for production**
+5. **Build for production**
    ```bash
    npm run build
    ```
@@ -154,7 +160,6 @@ Ensure your Express.js backend is running with the authentication routes configu
    ```bash
    npm run dev
    ```
-
 
 ## Project Structure
 
@@ -198,3 +203,4 @@ Ensure your Express.js backend is running with the authentication routes configu
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
+
