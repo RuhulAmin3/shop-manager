@@ -15,7 +15,7 @@ const registerUser = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-
+ 
 // login user
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const { remember } = req.body || {};

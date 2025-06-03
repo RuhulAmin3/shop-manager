@@ -10,18 +10,20 @@ import { stream } from "./shared/logger";
 const app: Application = express();
 
 const corsOptions = {
-  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+  origin: (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void
+  ) => {
     const allowedOrigins = [
       "http://localhost:5173",
-      "http://localhost:3000",
       "http://localhost:3001",
+      "https://shop-manager-auth.netlify.app",
     ];
 
-    // Allow any *.localhost:5173 subdomain (like http://shop1.localhost:5173)
+    const localhostSubdomainRegex = /^http:\/\/.*\.localhost:5173$/;
     if (
       origin &&
-      (allowedOrigins.includes(origin) ||
-        /^http:\/\/.*\.localhost:5173$/.test(origin))
+      (allowedOrigins.includes(origin) || localhostSubdomainRegex.test(origin))
     ) {
       callback(null, true);
     } else {
