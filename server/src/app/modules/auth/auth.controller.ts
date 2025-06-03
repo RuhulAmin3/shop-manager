@@ -28,7 +28,7 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     maxAge: remember ? 7 * 86400000 : 30 * 60 * 1000,
     sameSite: "none",
   });
-
+  
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,

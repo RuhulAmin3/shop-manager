@@ -6,7 +6,6 @@ import httpStatus from "http-status";
 import morgan from "morgan";
 import GlobalErrorHandler from "./app/middlewares/globalErrorHandler";
 import router from "./app/routes";
-import { stream } from "./shared/logger";
 const app: Application = express();
 
 const corsOptions = {
@@ -16,6 +15,7 @@ const corsOptions = {
   ) => {
     const allowedOrigins = [
       "http://localhost:5173",
+      "http://localhost:3000",
       "http://localhost:3001",
       "https://shop-manager-auth.netlify.app",
     ];
@@ -38,7 +38,7 @@ const corsOptions = {
 // Middleware setup
 app.use(cors(corsOptions));
 
-app.use(morgan("combined", { stream }));
+app.use(morgan("combined"));
 app.use(cookieParser());
 
 app.use(express.json());

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setUser } from "./authSlice";
 
-const API_BASE_URL = "http://localhost:3000/api/v1/auth";
+const API_BASE_URL = import.meta.env.VITE_LOCAL_API_URL;
 
 interface User {
   id: string;
@@ -56,7 +56,7 @@ export const authApi = createApi({
         url: "/logout",
         method: "POST",
       }),
-      invalidatesTags:["User"]
+      invalidatesTags: ["User"],
     }),
 
     getProfile: builder.query<{ data: User }, void>({
@@ -72,9 +72,7 @@ export const authApi = createApi({
               user: { id, username, shopNames },
             })
           );
-        } catch (err) {
-          console.log("error", err)
-        }
+        } catch (err) {}
       },
     }),
   }),

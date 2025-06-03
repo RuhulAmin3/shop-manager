@@ -62,7 +62,7 @@ Registers a new user account.
 {
   "username": "string (required)",
   "password": "string (required)",
-  "shops": ["string"] // Array of shop names (minimum 3)
+  "shopNames": ["string"] // Array of shop names (minimum 3)
 }
 ```
 
@@ -125,18 +125,12 @@ Logs out the currently authenticated user by invalidating their session or token
    npm install
    ```
 
-3. **Configure API endpoint**
-   Update the API base URL in `src/store/api/authApi.ts`:
-   ```typescript
-   const API_BASE_URL = 'http://localhost:3000/api/v1/auth';
-   ```
-
-4. **Start development server**
+3. **Start development server**
    ```bash
    npm run dev
    ```
 
-5. **Build for production**
+4. **Build for production**
    ```bash
    npm run build
    ```
@@ -204,10 +198,3 @@ Ensure your Express.js backend is running with the authentication routes configu
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
-
-### Environment Variables
-
-Create a `.env` file in the root directory:
-```env
-VITE_API_BASE_URL=http://localhost:3000/api
-```
