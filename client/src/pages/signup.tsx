@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,85 +8,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Plus, X } from "lucide-react";
-import { toast } from "sonner";
-import { useSignupMutation } from "@/store/authApi";
+import useSignupLogic from "@/hooks/useSignupLogic";
 
 const SignupPage = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [shops, setShops] = useState<string[]>(["", "", ""]);
-  const [signup, { isLoading }] = useSignupMutation();
-  const navigate = useNavigate();
-
-  const validatePassword = (password: string) => {
-    const minLength = password.length >= 8;
-    const hasNumber = /\d/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    return minLength && hasNumber && hasSpecialChar;
-  };
-
-  const addShopField = () => {
-    setShops([...shops, ""]);
-  };
-
-  const removeShopField = (index: number) => {
-    if (shops.length > 3) {
-      const newShops = shops.filter((_, i) => i !== index);
-      setShops(newShops);
-    }
-  };
-
-  const updateShop = (index: number, value: string) => {
-    const newShops = [...shops];
-    newShops[index] = value;
-    setShops(newShops);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Validation
-    if (!username.trim()) {
-      toast("Username is required");
-      return;
-    }
-
-    if (!validatePassword(password)) {
-      toast(
-        "Password must be at least 8 characters with at least one number and one special character"
-      );
-      return;
-    }
-
-    const validShops = shops.filter((shop) => shop.trim() !== "");
-    if (validShops.length < 3) {
-      toast("Please enter at least 3 shop names");
-      return;
-    }
-
-    // Check for duplicate shop names
-    const uniqueShops = [...new Set(validShops)];
-    if (uniqueShops.length !== validShops.length) {
-      toast("Shop names must be unique");
-      return;
-    }
-
-    try {
-      await signup({
-        username,
-        password,
-        shopNames: validShops,
-      }).unwrap();
-      toast("Account created successfully!");
-      navigate("/signin");
-    } catch (error: any) {
-      console.log("error", error);
-      toast(error.data?.message || "Signup failed");
-    }
-  };
+  const {
+    showPassword,
+    setShowPassword,
+    isLoading,
+    addShopField,
+    signupData,
+    navigate,
+    removeShopField,
+    updateShop,
+    handleSubmit,
+    handleChange,
+  } = useSignupLogic();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 p-4">
@@ -106,9 +42,12 @@ const SignupPage = () => {
               <Label htmlFor="username">Username</Label>
               <Input
                 id="username"
+                name="username"
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={signupData.username}
+                onChange={({ target }) =>
+                  handleChange(target.name, target.value)
+                }
                 required
                 className="transition-all duration-200 focus:ring-2 focus:ring-blue-500"
               />
@@ -119,9 +58,12 @@ const SignupPage = () => {
               <div className="relative">
                 <Input
                   id="password"
+                  name="password"
                   type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={signupData.password}
+                  onChange={({ target }) =>
+                    handleChange(target.name, target.value)
+                  }
                   required
                   className="pr-10 transition-all duration-200 focus:ring-2 focus:ring-blue-500"
                 />
@@ -140,7 +82,7 @@ const SignupPage = () => {
 
             <div className="space-y-2">
               <Label>Shop Names (minimum 3)</Label>
-              {shops.map((shop, index) => (
+              {signupData.shops.map((shop, index) => (
                 <div key={index} className="flex gap-2">
                   <Input
                     type="text"
@@ -149,7 +91,7 @@ const SignupPage = () => {
                     placeholder={`Shop ${index + 1}`}
                     className="transition-all duration-200 focus:ring-2 focus:ring-blue-500"
                   />
-                  {shops.length > 3 && (
+                  {signupData.shops.length > 3 && (
                     <Button
                       type="button"
                       variant="outline"
@@ -197,4 +139,5 @@ const SignupPage = () => {
     </div>
   );
 };
+
 export default SignupPage;

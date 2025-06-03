@@ -54,7 +54,6 @@ const logout = catchAsync(async (req: Request, res: Response) => {
 
 export const getProfile = catchAsync(async (req: Request, res: Response) => {
   const id = req?.user?.userId;
-  console.warn("id", id);
   const result = await authService.getProfile(id);
   sendResponse(res, {
     statusCode: StatusCodes.OK,

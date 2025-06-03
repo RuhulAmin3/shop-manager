@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setUser } from "./authSlice";
+
 const API_BASE_URL = "http://localhost:3000/api/v1/auth";
 
 interface User {
@@ -72,7 +73,7 @@ export const authApi = createApi({
             })
           );
         } catch (err) {
-          // handle error if needed
+          console.log("error", err)
         }
       },
     }),
