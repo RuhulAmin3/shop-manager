@@ -2,6 +2,22 @@
 
 A modern web application for managing multiple shops with user authentication and a sleek dashboard interface.
 
+### ⚠️ Deployment Notice
+
+Due to backend deployment issues, the backend server could not be integrated with the frontend in the deployed environment. The free-tier hosting does not support sub-domain features, which prevents enabling sub-domain-based API access for the frontend deployment. 
+
+**Recommendation:**  
+To fully evaluate the application, please run both the frontend and backend locally. All task requirements are demonstrated in the provided video.
+
+[Demo Video](https://www.loom.com/share/7719ec085cad42f6a9320e26828e4035?sid=f78112d3-15f1-4d33-afd0-d9623b0b5cd9)
+
+## Live Demo
+
+You can access the deployed frontend public here:  
+[shop-manager (Frontend Only)](https://shop-manager-auth.netlify.app/)
+
+> **Note:** The live demo is frontend-only due to sub-domain limitations. For full functionality, please run both frontend and backend locally as described below.
+
 ## Features
 
 ### 🔐 Authentication
